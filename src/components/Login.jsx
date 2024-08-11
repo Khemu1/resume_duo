@@ -10,7 +10,7 @@ export default function LargestContentfulPaint() {
   const [errors, setError] = useState({
     usernameError : "",
     passwordError : "",
-    notFound : ""
+    notFoundORInUse : ""
   })
 
   function handleChange(event) {
@@ -25,7 +25,7 @@ export default function LargestContentfulPaint() {
   const handleLogin = (event) => {
     errors.passwordError = ''
     errors.usernameError = ''
-    errors.notFound = ''
+    errors.notFoundORInUse = ''
     event.preventDefault();
 
     fetch("/api/user/login", {
@@ -43,7 +43,7 @@ export default function LargestContentfulPaint() {
           setError(oldValues =>{
             return{
               ...oldValues,
-              notFound : data.message
+              notFoundORInUse : data.message
             }
           })
         }
@@ -57,6 +57,7 @@ export default function LargestContentfulPaint() {
   const handleRegister = (event) => {
     errors.passwordError = ''
     errors.usernameError = ''
+    errors.notFoundORInUse = ''
     event.preventDefault();
     // Send form data to PHP using fetch or axios
     fetch("/api/user/register", {
@@ -69,24 +70,34 @@ export default function LargestContentfulPaint() {
       .then((response) => response.json())
       .then((data) => {
 
-        console.log(data);
-
-        if (data.errors.password != ""){
+        console.log(data.message);
+        console.log(errors.passwordError)
+        if(data.errors){
+          if (data.errors.password != ""){
+            setError(oldValues =>{
+              return{
+                ...oldValues,
+                passwordError : data.errors.password
+              }
+            })
+          }console.log(errors.passwordError)
+          if (data.errors.username != ""){
+            setError(oldValues =>{
+              return{
+                ...oldValues,
+                usernameError : data.errors.username
+              }
+            })
+          }console.log(errors.passwordError)
+        }
+        if(data.message !=""){
           setError(oldValues =>{
             return{
               ...oldValues,
-              passwordError : data.errors.password
+              notFoundORInUse : data.message
             }
           })
-        }
-        if (data.errors.username != ""){
-          setError(oldValues =>{
-            return{
-              ...oldValues,
-              usernameError : data.errors.username
-            }
-          })
-        }
+        }console.log(errors.passwordError)
 
       })
       .catch((error) => {
@@ -153,7 +164,7 @@ export default function LargestContentfulPaint() {
             </button>
           </div>
 
-          <div className="userNotFound flex justify-center">{errors.notFound}</div>
+          <div className="userNotFound flex justify-center">{errors.notFoundORInUse}</div>
 
         </form>
       </div>
