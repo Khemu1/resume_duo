@@ -30,6 +30,17 @@ export const getValidateUserSchema = () => {
   });
 };
 
+export const getValidateloginSchema = () => {
+  return Yup.object().shape({
+    username: Yup.string()
+      .required("Please enter a valid username")
+      .label("Username"),
+    password: Yup.string()
+      .required("Password is required")
+      .label("Password"),
+  });
+};
+
 export const getValidateResumeSchema = () => {
   return Yup.object().shape({
     jobTitle: Yup.string()

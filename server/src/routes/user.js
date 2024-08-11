@@ -6,7 +6,7 @@ import { login, register } from "../controllers/user.js";
 
 const userRouter = Router();
 
-userRouter.post("/login", login);
+userRouter.post("/login", formValidation, login);
 userRouter.get("/validate-current-user", validateCurrentUser);
 userRouter.post("/register", formValidation, register);
 
