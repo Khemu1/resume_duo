@@ -1,5 +1,6 @@
 import './App.css'
 import Login from '/src/components/Login.jsx'
+import Home from '/src/components/Home'
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 // import { useCookies } from 'react-cookie'
 
@@ -16,6 +17,7 @@ function App() {
     <Router>
       <Routes>
       <Route path="/" element={<Login />} />
+      <Route path='/Home' element={<Home />} />
       </Routes>
     </Router>
   )

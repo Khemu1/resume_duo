@@ -1,10 +1,10 @@
 import { useState } from "react";
 
 export default function LargestContentfulPaint() {
-  const [data, setData] = useState({
+  const [form, setData] = useState({
     username: "",
     password: "",
-    check: false,
+    check: false
   });
 
   const [errors, setError] = useState({
@@ -13,12 +13,20 @@ export default function LargestContentfulPaint() {
     notFoundORInUse : ""
   })
 
+  const setCookie = (name, value, days) => {
+    const expirationDate = new Date();
+    expirationDate.setDate(expirationDate.getDate() + days);
+  
+    document.cookie = `${name}=${value}; expires=${expirationDate.toUTCString()}; path=/`;
+  };
+
+
   function handleChange(event) {
     const { name, type, value, checked } = event.target;
-    setData((oldValues) => {
+    setData(oldValues => {
       return {
         ...oldValues,
-        [name]: type === "checkbox" ? checked : value,
+        [name]: type === "checkbox" ? checked : value
       };
     });
   }
@@ -33,11 +41,10 @@ export default function LargestContentfulPaint() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify(form),
     })
       .then((response) => response.json())
       .then((data) => {
-        
         console.log(data)
         if (data.message != ""){
           setError(oldValues =>{
@@ -47,7 +54,10 @@ export default function LargestContentfulPaint() {
             }
           })
         }
-        
+        if ( data.username == form.username && form.check === true){
+          setCookie("username", data.username, 7)
+          console.log("cookie created successfuly")
+        }
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -65,13 +75,11 @@ export default function LargestContentfulPaint() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify(form),
     })
       .then((response) => response.json())
       .then((data) => {
-
-        console.log(data.message);
-        console.log(errors.passwordError)
+        console.log(data)
         if(data.errors){
           if (data.errors.password != ""){
             setError(oldValues =>{
@@ -80,7 +88,7 @@ export default function LargestContentfulPaint() {
                 passwordError : data.errors.password
               }
             })
-          }console.log(errors.passwordError)
+          }
           if (data.errors.username != ""){
             setError(oldValues =>{
               return{
@@ -88,7 +96,7 @@ export default function LargestContentfulPaint() {
                 usernameError : data.errors.username
               }
             })
-          }console.log(errors.passwordError)
+          }
         }
         if(data.message !=""){
           setError(oldValues =>{
@@ -97,8 +105,11 @@ export default function LargestContentfulPaint() {
               notFoundORInUse : data.message
             }
           })
-        }console.log(errors.passwordError)
-
+        }
+        if ( data.username == form.username && form.check === true){
+          setCookie("username", data.username, 7)
+          console.log("cookie created successfuly")
+        }
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -122,7 +133,7 @@ export default function LargestContentfulPaint() {
             type="text"
             id="username"
             name="username"
-            value={data.username}
+            value={form.username}
             className="input_field"
             onChange={handleChange}
           ></input>
@@ -135,7 +146,7 @@ export default function LargestContentfulPaint() {
             type="password"
             id="password"
             name="password"
-            value={data.password}
+            value={form.password}
             className="input_field"
             onChange={handleChange}
           ></input>
@@ -147,7 +158,7 @@ export default function LargestContentfulPaint() {
             type="checkbox"
             id="check"
             name="check"
-            checked={data.check}
+            checked={form.check}
             onChange={handleChange}
           ></input>
           <label htmlFor="check" className="check_label">
