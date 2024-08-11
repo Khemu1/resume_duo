@@ -1,5 +1,4 @@
-import { StrictMode, useEffect, useState } from "react";
-import { createRoot } from "react-dom/client";
+import { useState } from "react";
 
 export default function LargestContentfulPaint() {
   const [data, setData] = useState({
@@ -7,6 +6,12 @@ export default function LargestContentfulPaint() {
     password: "",
     check: false,
   });
+
+  const [errors, setError] = useState({
+    usernameError : "",
+    passwordError : "",
+    notFound : ""
+  })
 
   function handleChange(event) {
     const { name, type, value, checked } = event.target;
@@ -18,8 +23,11 @@ export default function LargestContentfulPaint() {
     });
   }
   const handleLogin = (event) => {
+    errors.passwordError = ''
+    errors.usernameError = ''
+    errors.notFound = ''
     event.preventDefault();
-    // Send form data to PHP using fetch or axios
+
     fetch("/api/user/login", {
       method: "POST",
       headers: {
@@ -29,9 +37,17 @@ export default function LargestContentfulPaint() {
     })
       .then((response) => response.json())
       .then((data) => {
-        // Handle response from PHP
-
-        console.log(data);
+        
+        console.log(data)
+        if (data.message != ""){
+          setError(oldValues =>{
+            return{
+              ...oldValues,
+              notFound : data.message
+            }
+          })
+        }
+        
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -39,6 +55,8 @@ export default function LargestContentfulPaint() {
   };
 
   const handleRegister = (event) => {
+    errors.passwordError = ''
+    errors.usernameError = ''
     event.preventDefault();
     // Send form data to PHP using fetch or axios
     fetch("/api/user/register", {
@@ -50,9 +68,26 @@ export default function LargestContentfulPaint() {
     })
       .then((response) => response.json())
       .then((data) => {
-        // Handle response from PHP
 
         console.log(data);
+
+        if (data.errors.password != ""){
+          setError(oldValues =>{
+            return{
+              ...oldValues,
+              passwordError : data.errors.password
+            }
+          })
+        }
+        if (data.errors.username != ""){
+          setError(oldValues =>{
+            return{
+              ...oldValues,
+              usernameError : data.errors.username
+            }
+          })
+        }
+
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -80,7 +115,10 @@ export default function LargestContentfulPaint() {
             className="input_field"
             onChange={handleChange}
           ></input>
-          <br /> <br />
+
+          <p>{errors.usernameError}</p>
+
+          <br /> 
           <label htmlFor="password">password</label>
           <input
             type="password"
@@ -90,7 +128,9 @@ export default function LargestContentfulPaint() {
             className="input_field"
             onChange={handleChange}
           ></input>
-          <br /> <br />
+
+          <p>{errors.passwordError}</p>
+
           <br />
           <input
             type="checkbox"
@@ -112,6 +152,9 @@ export default function LargestContentfulPaint() {
               sign up
             </button>
           </div>
+
+          <div className="userNotFound flex justify-center">{errors.notFound}</div>
+
         </form>
       </div>
     </div>

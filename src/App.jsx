@@ -1,5 +1,6 @@
 import './App.css'
-import Login from '/src/components/Login'
+import Login from '/src/components/Login.jsx'
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 // import { useCookies } from 'react-cookie'
 
 function App() {
@@ -12,9 +13,11 @@ function App() {
   
 
   return (
-    <>
-      <Login />
-    </>
+    <Router>
+      <Routes>
+      <Route path="/" element={<Login />} />
+      </Routes>
+    </Router>
   )
 }
 

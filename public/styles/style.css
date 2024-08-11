@@ -64,3 +64,11 @@ label{
 .butons{
     margin-left: -9%;
 }
+P{
+    color: red;
+}
+.userNotFound{
+    margin-left: -11%;
+    margin-top: 9%;
+    color: red;
+}
