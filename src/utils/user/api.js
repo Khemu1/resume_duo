@@ -1,4 +1,4 @@
-export async function Login(formData) {
+export async function login(formData) {
   try {
     const response = await fetch("/api/user/login", {
       method: "POST",
@@ -11,12 +11,20 @@ export async function Login(formData) {
 
     // Check if the response is not OK
     if (!response.ok) {
-      const errorData = await response.json();
-      throw {
-        message: errorData.message || "Login failed",
-      };
-    }
+      let errorMessage = "Unexpected Error Occurred";
 
+      try {
+        const errorData = await response.json();
+
+        if (errorData.message) {
+          errorMessage = errorData.message;
+        }
+      } catch (jsonError) {
+        // If JSON parsing fails, fall back to a generic message
+        console.error("Error parsing JSON:", jsonError);
+      }
+      throw new Error(errorMessage);
+    }
     // If response is OK, parse the data
     const data = await response.json();
     return data;
@@ -36,19 +44,22 @@ export const registerUser = async (data) => {
       },
       body: JSON.stringify(data),
     });
+
     if (!response.ok) {
-      const errorData = await response.json();
-      if (errorData.erros) {
-        throw new Error(errorData.erros);
+      let errorMessage = "Unexpected Error Occurred";
+      try {
+        const errorData = await response.json();
+        errorMessage = errorData.errors || errorData.message || errorMessage;
+      } catch (jsonError) {
+        console.error("Error parsing JSON:", jsonError);
       }
-      if (errorData.message) {
-        throw new Error(errorData.message);
-      }
-      const data = await response.json();
-      return data;
+      throw new Error(errorMessage);
     }
+
+    const responseData = await response.json();
+    return responseData;
   } catch (error) {
     console.error("Error:", error);
-    throw error || "An error occurred";
+    throw error;
   }
 };

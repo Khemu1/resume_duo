@@ -21,9 +21,7 @@ export async function formValidation(req, res, next) {
     req.user = { username, password };
     next();
   } catch (error) {
-    return res
-      .status(400)
-      .json({ errors: transformYupErrorsIntoObject(error) });
+    return res.status(400).json(transformYupErrorsIntoObject({ ...error }));
   }
 }
 export async function loginValidation(req, res, next) {

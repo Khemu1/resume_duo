@@ -1,68 +1,57 @@
 import { useState, useContext } from "react";
 import { UserContext } from "./user_context/UserContext";
 import LoginCSS from "/public/styles/Login.module.css";
-import { useLogin, useRgister } from "/src/hooks/user.js";
+import { useLogin, useRegister } from "/src/hooks/user.js";
 
-export default function LargestContentfulPaint() {
+export default function Login() {
   const { user, setUser } = useContext(UserContext);
 
-  const { loading, error: loginErrors, handleUseLogin } = useLogin();
+  const {
+    loading: loginLoading,
+    error: loginErrors,
+    handleUseLogin,
+  } = useLogin();
   const {
     loading: registerLoading,
     error: registerErrors,
-    handleRegister,
-  } = useRgister();
+    handleUseRegister,
+  } = useRegister();
 
-  const [form, setData] = useState({
+  const [form, setForm] = useState({
     username: "",
     password: "",
     check: false,
   });
+  console.log(registerErrors);
 
-  const [errors, setError] = useState({
-    usernameError: "",
-    passwordError: "",
-    notFoundORInUse: "",
-  });
-
-  function handleChange(event) {
+  const handleChange = (event) => {
     const { name, type, value, checked } = event.target;
-    setData((oldValues) => {
-      return {
-        ...oldValues,
-        [name]: type === "checkbox" ? checked : value,
-      };
-    });
-  }
+    setForm((prevValues) => ({
+      ...prevValues,
+      [name]: type === "checkbox" ? checked : value,
+    }));
+  };
 
   const handleLogin = async (event) => {
-    setError({
-      usernameError: "",
-      passwordError: "",
-      notFoundORInUse: "",
-    });
     event.preventDefault();
-
     try {
-      handleUseLogin(form);
+      await handleUseLogin(form);
       if (loginErrors) {
-        console.log("i'm from login", loginErrors);
-        return;
+        console.error("Login error:", loginErrors);
+      } else {
+        console.log("Login successful");
       }
     } catch (error) {
-      console.log(error);
+      console.error("Login catch error:", error);
     }
   };
 
   const handleSignUp = async (event) => {
+    event.preventDefault();
     try {
-      handleRegister(form);
-      if (registerErrors) {
-        console.log("i'm from register", RegisterErrors);
-        return;
-      }
+      await handleUseRegister(form);
     } catch (error) {
-      console.log(error);
+      console.error("Register catch error:", error);
     }
   };
 
@@ -84,9 +73,12 @@ export default function LargestContentfulPaint() {
               className="input_field"
               onChange={handleChange}
             />
-            {registerErrors.errors && registerErrors.errors.username && (
-              <p>{registerErrors.errors.username}</p>
-            )}{" "}
+            {/* {loginErrors && loginErrors.username && (
+              <p className="error-text">{loginErrors.username}</p>
+            )}
+            {registerErrors && registerErrors.username && (
+              <p className="error-text">{registerErrors.username}</p>
+            )} */}
             <br />
             <label htmlFor="password">Password</label>
             <input
@@ -97,9 +89,12 @@ export default function LargestContentfulPaint() {
               className="input_field"
               onChange={handleChange}
             />
-            {registerErrors.errors && registerErrors.errors.password && (
-              <p>{registerErrors.errors.password}</p>
-            )}
+            {/* {loginErrors && loginErrors.password && (
+              <p className="error-text">{loginErrors.password}</p>
+            )} */}
+            {/* {registerErrors && registerErrors.errors.password && (
+              <p className="error-text">{registerErrors.errors.password}</p>
+            )} */}
             <br />
             <input
               type="checkbox"
@@ -111,20 +106,27 @@ export default function LargestContentfulPaint() {
             <label htmlFor="check" className="check_label">
               Remember me
             </label>
-            <br /> <br />
             <br />
             <div className="buttons flex flex-row gap-7 justify-center">
-              <button className="button" onClick={handleLogin}>
+              <button
+                className="button"
+                onClick={handleLogin}
+                disabled={loginLoading}
+              >
                 Sign in
               </button>
-              <button className="button" onClick={handleSignUp}>
+              <button
+                className="button"
+                onClick={handleSignUp}
+                disabled={registerLoading}
+              >
                 Sign up
               </button>
             </div>
             <div className="userNotFound flex justify-center">
-              {registerErrors.message(
-                <p className="text-sm font-semibold text-red-600">
-                  {registerErrors.message}
+              {(loginErrors || registerErrors) && (
+                <p className="text-sm font-extrabold text-red-600">
+                  {loginErrors?.message || registerErrors?.message}
                 </p>
               )}
             </div>
