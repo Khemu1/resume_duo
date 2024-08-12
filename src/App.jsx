@@ -1,11 +1,10 @@
-import './App.css'
-import Login from '/src/components/Login.jsx'
-import Home from '/src/components/Home'
+import "./App.css";
+import Login from "/src/components/Login.jsx";
+import Home from "/src/components/Home";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import { UserProvider } from "./components/user_context/UserContext.jsx";
 // import { useCookies } from 'react-cookie'
-
-export const Context = React.createContext();
 
 function App() {
   // const [cookies, setCookie] = useCookies('user')
@@ -14,18 +13,18 @@ function App() {
   //   setCookie('user', user, {path : "/"})
   // }
 
-  const [username, setUsername] = useState('')
+  const [username, setUsername] = useState("");
 
   return (
-    <Context.Provider value={[username, setUsername]}>
-      <Router>
+    <Router>
+      <UserProvider>
         <Routes>
           <Route path="/" element={<Login />} />
-          <Route path='/Home' element={<Home />} />
+          <Route path="/Home" element={<Home />} />
         </Routes>
-      </Router>
-    </Context.Provider>
-  )
+      </UserProvider>
+    </Router>
+  );
 }
 
-export default App
+export default App;

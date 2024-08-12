@@ -1,133 +1,130 @@
-import { useState } from "react";
-import { useContext } from 'react';
-import { Context } from "../App";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import LoginCSS from '/public/styles/Login.module.css';
+import { UserContext } from "./user_context/UserContext";
+import LoginCSS from "/public/styles/Login.module.css";
+
 export default function LargestContentfulPaint() {
+  const { user, setUser } = useContext(UserContext);
+
   const [form, setData] = useState({
     username: "",
     password: "",
-    check: false
+    check: false,
   });
 
   const [errors, setError] = useState({
-    usernameError : "",
-    passwordError : "",
-    notFoundORInUse : ""
-  })
+    usernameError: "",
+    passwordError: "",
+    notFoundORInUse: "",
+  });
 
-  const [username, setUsername] = useContext(Context)
-
-  const navigate = useNavigate()
-
-  // const setCookie = (name, value, days) => {
-  //   const expirationDate = new Date();
-  //   expirationDate.setDate(expirationDate.getDate() + days);
-  
-  //   document.cookie = `${name}=${value}; expires=${expirationDate.toUTCString()}; path=/`;
-  // };
-
+  const navigate = useNavigate();
 
   function handleChange(event) {
     const { name, type, value, checked } = event.target;
-    setData(oldValues => {
+    setData((oldValues) => {
       return {
         ...oldValues,
-        [name]: type === "checkbox" ? checked : value
+        [name]: type === "checkbox" ? checked : value,
       };
     });
   }
-  const handleLogin = (event) => {
-    errors.passwordError = ''
-    errors.usernameError = ''
-    errors.notFoundORInUse = ''
+
+  const handleLogin = async (event) => {
+    setError({
+      usernameError: "",
+      passwordError: "",
+      notFoundORInUse: "",
+    });
     event.preventDefault();
 
-    fetch("/api/user/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(form),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data)
-        if (data.message != ""){
-          setError(oldValues =>{
-            return{
-              ...oldValues,
-              notFoundORInUse : data.message
-            }
-          })
-        }
-        if ( data.username == form.username && form.check === true){
-        //   setCookie("username", data.username, 7)
-        //   console.log("cookie created successfuly")
-        setUsername(form.username)
-        console.log(username)
-        // URL('http://localhost:5173/Home')
-        // window.open('http://localhost:5173/Home');
-        navigate("/Home");
-        }
-      })
-      .catch((error) => {
-        console.error("Error:", error);
+    try {
+      const response = await fetch("/api/user/login", {
+        method: "POST",
+        credentials: "same-origin",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form),
       });
+
+      const data = await response.json();
+
+      if (data.message) {
+        setError((oldValues) => ({
+          ...oldValues,
+          notFoundORInUse: data.message,
+        }));
+      }
+
+      if (data.username === form.username) {
+        setUser(data.username);
+
+        if (form.check) {
+          // Handle setting the cookie if needed
+        }
+
+        navigate("/home");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
 
-  const handleRegister = (event) => {
-    errors.passwordError = ''
-    errors.usernameError = ''
-    errors.notFoundORInUse = ''
+  const handleRegister = async (event) => {
+    setError({
+      usernameError: "",
+      passwordError: "",
+      notFoundORInUse: "",
+    });
     event.preventDefault();
-    // Send form data to PHP using fetch or axios
-    fetch("/api/user/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(form),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data)
-        if(data.errors){
-          if (data.errors.password != ""){
-            setError(oldValues =>{
-              return{
-                ...oldValues,
-                passwordError : data.errors.password
-              }
-            })
-          }
-          if (data.errors.username != ""){
-            setError(oldValues =>{
-              return{
-                ...oldValues,
-                usernameError : data.errors.username
-              }
-            })
-          }
-        }
-        if(data.message !=""){
-          setError(oldValues =>{
-            return{
-              ...oldValues,
-              notFoundORInUse : data.message
-            }
-          })
-        }
-        if ( data.username == form.username && form.check === true){
-        //   setCookie("username", data.username, 7)
-        //   console.log("cookie created successfuly")
-        setUsername(form.username)
-        console.log(username)
-        }
-      })
-      .catch((error) => {
-        console.error("Error:", error);
+
+    try {
+      const response = await fetch("/api/user/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form),
       });
+
+      const data = await response.json();
+
+      if (data.errors) {
+        if (data.errors.password) {
+          setError((oldValues) => ({
+            ...oldValues,
+            passwordError: data.errors.password,
+          }));
+        }
+
+        if (data.errors.username) {
+          setError((oldValues) => ({
+            ...oldValues,
+            usernameError: data.errors.username,
+          }));
+        }
+      }
+
+      if (data.message) {
+        setError((oldValues) => ({
+          ...oldValues,
+          notFoundORInUse: data.message,
+        }));
+      }
+
+      if (data.username === form.username) {
+        setUser(data.username);
+
+        if (form.check) {
+          // Handle setting the cookie if needed
+        }
+
+        navigate("/home");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
 
   return (
@@ -138,12 +135,8 @@ export default function LargestContentfulPaint() {
             <h1>Resume builder</h1>
           </div>
 
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-            }}
-          >
-            <label htmlFor="username">user name</label>
+          <form onSubmit={(e) => e.preventDefault()}>
+            <label htmlFor="username">User name</label>
             <input
               type="text"
               id="username"
@@ -151,12 +144,10 @@ export default function LargestContentfulPaint() {
               value={form.username}
               className="input_field"
               onChange={handleChange}
-            ></input>
-
+            />
             <p>{errors.usernameError}</p>
-
-            <br /> 
-            <label htmlFor="password">password</label>
+            <br />
+            <label htmlFor="password">Password</label>
             <input
               type="password"
               id="password"
@@ -164,10 +155,8 @@ export default function LargestContentfulPaint() {
               value={form.password}
               className="input_field"
               onChange={handleChange}
-            ></input>
-
+            />
             <p>{errors.passwordError}</p>
-
             <br />
             <input
               type="checkbox"
@@ -175,26 +164,26 @@ export default function LargestContentfulPaint() {
               name="check"
               checked={form.check}
               onChange={handleChange}
-            ></input>
+            />
             <label htmlFor="check" className="check_label">
-              remember me
+              Remember me
             </label>
             <br /> <br />
             <br />
-            <div className="butons flex flex-row gap-7 justify-center">
+            <div className="buttons flex flex-row gap-7 justify-center">
               <button className="button" onClick={handleLogin}>
-                sign in
+                Sign in
               </button>
               <button className="button" onClick={handleRegister}>
-                sign up
+                Sign up
               </button>
             </div>
-
-            <div className="userNotFound flex justify-center">{errors.notFoundORInUse}</div>
-
+            <div className="userNotFound flex justify-center">
+              {errors.notFoundORInUse}
+            </div>
           </form>
         </div>
       </div>
-    </div>  
+    </div>
   );
 }

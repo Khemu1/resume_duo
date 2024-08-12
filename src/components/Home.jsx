@@ -1,15 +1,14 @@
-import HomeCSS from '/public/styles/Home.module.css';
-import { useContext } from 'react';
-import { Context } from "../App";
+import HomeCSS from "/public/styles/Home.module.css";
+import { useContext } from "react";
+import { UserContext } from "./user_context/UserContext.jsx";
 
 export default function LargestContentfulPaint() {
+  const { user } = useContext(UserContext);
+  console.log(user);
 
-
-    const [username, setUsername] = useContext(Context)
-
-    return(
-        <div className={HomeCSS.page}>
-            <div className={HomeCSS.navBar}>{username}</div>
-        </div>
-    )
+  return (
+    <div className={HomeCSS.page}>
+      <div className={HomeCSS.navBar}>{user}</div>
+    </div>
+  );
 }
