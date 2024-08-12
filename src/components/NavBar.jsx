@@ -1,27 +1,16 @@
-import HomeCSS from '/public/styles/Home.module.css';
-import React,{ useContext, useEffect } from 'react';
-import { Context } from "../App";
-import { Navigate, useNavigate } from 'react-router-dom';
 import NavBarCSS from '/public/styles/navBar.module.css'
+import { UserContext } from './user_context/UserContext';
+import { useContext } from 'react';
 
-export default function LargestContentfulPaint() {
+export default function NavBar() {
 
+    // const [username, setUsername] = useContext(Context)
+    const { user } = useContext(UserContext);
 
-    const [username, setUsername] = useContext(Context)
-
-
-    useEffect(() => {
-        const storedCount = localStorage.getItem('username');
-        if (storedCount) {
-            setUsername(storedCount);
-        }
-    }, []);
-    
-    useEffect(() => {
-        localStorage.setItem('username', username);
-    }, [username]);
 
     return(
-        <div className={NavBarCSS.navBar}>{username}</div>
+        <div className={NavBarCSS.navBar}>
+            <div className={NavBarCSS.navBar_contents}><h1>{user}</h1></div>
+        </div>
     )
 }

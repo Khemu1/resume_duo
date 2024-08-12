@@ -6,4 +6,13 @@
     width: 100%;
     height: 13%;
     background-color: blue;
+    display: flex;
+    justify-content: center;
+}
+.navBar_contents{
+    display: flex;
+    align-items: center;
+    height: 100%;
+    width: 88%;
+    background-color: yellowgreen;
 }

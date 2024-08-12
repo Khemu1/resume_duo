@@ -2,9 +2,12 @@ import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "./user_context/UserContext";
 import LoginCSS from "/public/styles/Login.module.css";
+import {useLogin} from '/src/hooks/user.js'
 
 export default function LargestContentfulPaint() {
   const { user, setUser } = useContext(UserContext);
+  
+  const {loading, error:loginErrors, success, handleUseLoging} = useLogin()
 
   const [form, setData] = useState({
     username: "",
@@ -39,36 +42,27 @@ export default function LargestContentfulPaint() {
     event.preventDefault();
 
     try {
-      const response = await fetch("/api/user/login", {
-        method: "POST",
-        credentials: "same-origin",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(form),
-      });
-
-      const data = await response.json();
-
-      if (data.message) {
-        setError((oldValues) => ({
-          ...oldValues,
-          notFoundORInUse: data.message,
-        }));
-      }
-
-      if (data.username === form.username) {
-        setUser(data.username);
-
-        if (form.check) {
-          // Handle setting the cookie if needed
-        }
-
-        navigate("/home");
+      handleUseLoging(form)
+      if(loginErrors){
+        console.log(loginErrors)
+        return
       }
     } catch (error) {
-      console.error("Error:", error);
+      console.log(error)
     }
+    
+    
+    //   setError(loginErrors =>{
+    //     return{
+    //       ...oldValues,
+    //       notFoundORInUse : data.message
+    
+    //   })
+    // }
+    // if ( data.username == form.username && form.check === true){
+    // setUsername(form.username)
+    // }
+
   };
 
   const handleRegister = async (event) => {

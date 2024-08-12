@@ -2,7 +2,7 @@ import "./App.css";
 import Login from "/src/components/Login.jsx";
 import Home from "/src/components/Home";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import React, { useState } from "react";
+// import React, { useState } from "react";
 import { UserProvider } from "./components/user_context/UserContext.jsx";
 // import { useCookies } from 'react-cookie'
 
@@ -13,7 +13,7 @@ function App() {
   //   setCookie('user', user, {path : "/"})
   // }
 
-  const [username, setUsername] = useState("");
+  // const [username, setUsername] = useState("");
 
   return (
     <Router>
