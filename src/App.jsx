@@ -2,7 +2,10 @@ import './App.css'
 import Login from '/src/components/Login.jsx'
 import Home from '/src/components/Home'
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import React, { useState } from 'react';
 // import { useCookies } from 'react-cookie'
+
+export const Context = React.createContext();
 
 function App() {
   // const [cookies, setCookie] = useCookies('user')
@@ -11,15 +14,17 @@ function App() {
   //   setCookie('user', user, {path : "/"})
   // }
 
-  
+  const [username, setUsername] = useState('')
 
   return (
-    <Router>
-      <Routes>
-      <Route path="/" element={<Login />} />
-      <Route path='/Home' element={<Home />} />
-      </Routes>
-    </Router>
+    <Context.Provider value={[username, setUsername]}>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path='/Home' element={<Home />} />
+        </Routes>
+      </Router>
+    </Context.Provider>
   )
 }
 
