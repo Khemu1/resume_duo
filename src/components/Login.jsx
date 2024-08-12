@@ -1,9 +1,9 @@
 import { useState, useContext } from "react";
 import { UserContext } from "./user_context/UserContext";
 import LoginCSS from "/public/styles/Login.module.css";
-import { useLogin, useRgister } from "/src/hooks/user.js";
+import { useLogin, useRegister } from "/src/hooks/user.js";
 
-export default function LargestContentfulPaint() {
+export default function Login() {
   const { user, setUser } = useContext(UserContext);
 
   const { loading, error: loginErrors, handleUseLogin } = useLogin();
@@ -11,7 +11,7 @@ export default function LargestContentfulPaint() {
     loading: registerLoading,
     error: registerErrors,
     handleRegister,
-  } = useRgister();
+  } = useRegister();
 
   const [form, setData] = useState({
     username: "",
@@ -84,7 +84,8 @@ export default function LargestContentfulPaint() {
               className="input_field"
               onChange={handleChange}
             />
-            {registerErrors.errors && registerErrors.errors.username && (
+            <br />
+            {registerErrors && registerErrors.errors && registerErrors.errors.username && (
               <p>{registerErrors.errors.username}</p>
             )}{" "}
             <br />
@@ -97,10 +98,10 @@ export default function LargestContentfulPaint() {
               className="input_field"
               onChange={handleChange}
             />
-            {registerErrors.errors && registerErrors.errors.password && (
+            { registerErrors && registerErrors.errors && registerErrors.errors.password && (
               <p>{registerErrors.errors.password}</p>
             )}
-            <br />
+            <br /><br />
             <input
               type="checkbox"
               id="check"
@@ -113,16 +114,16 @@ export default function LargestContentfulPaint() {
             </label>
             <br /> <br />
             <br />
-            <div className="buttons flex flex-row gap-7 justify-center">
-              <button className="button" onClick={handleLogin}>
+            <div className={LoginCSS.buttons}>
+              <button className={LoginCSS.button} onClick={handleLogin}>
                 Sign in
               </button>
-              <button className="button" onClick={handleSignUp}>
+              <button className={LoginCSS.button} onClick={handleSignUp}>
                 Sign up
               </button>
             </div>
             <div className="userNotFound flex justify-center">
-              {registerErrors.message(
+              { registerErrors && registerErrors.message(
                 <p className="text-sm font-semibold text-red-600">
                   {registerErrors.message}
                 </p>
