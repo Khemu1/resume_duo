@@ -9,7 +9,7 @@ const UserProvider = ({ children }) => {
   const navigateTo = useNavigate();
 
   useEffect(() => {
-    // if (location.pathname === "/") {
+    if (location.pathname !== "/") {
       const fetchUserData = async () => {
         try {
           const response = await fetch("/api/user/validate-current-user", {
@@ -27,9 +27,8 @@ const UserProvider = ({ children }) => {
         }
       };
       fetchUserData();
-    // }
+    }
   }, [location.pathname, navigateTo]);
-
   return (
     <UserContext.Provider value={{ user, setUser }}>
       {children}

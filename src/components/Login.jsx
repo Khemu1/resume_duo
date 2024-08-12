@@ -1,13 +1,17 @@
 import { useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
 import { UserContext } from "./user_context/UserContext";
 import LoginCSS from "/public/styles/Login.module.css";
-import {useLogin} from '/src/hooks/user.js'
+import { useLogin, useRgister } from "/src/hooks/user.js";
 
 export default function LargestContentfulPaint() {
   const { user, setUser } = useContext(UserContext);
-  
-  const {loading, error:loginErrors, success, handleUseLoging} = useLogin()
+
+  const { loading, error: loginErrors, handleUseLogin } = useLogin();
+  const {
+    loading: registerLoading,
+    error: registerErrors,
+    handleRegister,
+  } = useRgister();
 
   const [form, setData] = useState({
     username: "",
@@ -20,8 +24,6 @@ export default function LargestContentfulPaint() {
     passwordError: "",
     notFoundORInUse: "",
   });
-
-  const navigate = useNavigate();
 
   function handleChange(event) {
     const { name, type, value, checked } = event.target;
@@ -42,82 +44,25 @@ export default function LargestContentfulPaint() {
     event.preventDefault();
 
     try {
-      handleUseLoging(form)
-      if(loginErrors){
-        console.log(loginErrors)
-        return
+      handleUseLogin(form);
+      if (loginErrors) {
+        console.log("i'm from login", loginErrors);
+        return;
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-    
-    
-    //   setError(loginErrors =>{
-    //     return{
-    //       ...oldValues,
-    //       notFoundORInUse : data.message
-    
-    //   })
-    // }
-    // if ( data.username == form.username && form.check === true){
-    // setUsername(form.username)
-    // }
-
   };
 
-  const handleRegister = async (event) => {
-    setError({
-      usernameError: "",
-      passwordError: "",
-      notFoundORInUse: "",
-    });
-    event.preventDefault();
-
+  const handleSignUp = async (event) => {
     try {
-      const response = await fetch("/api/user/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(form),
-      });
-
-      const data = await response.json();
-
-      if (data.errors) {
-        if (data.errors.password) {
-          setError((oldValues) => ({
-            ...oldValues,
-            passwordError: data.errors.password,
-          }));
-        }
-
-        if (data.errors.username) {
-          setError((oldValues) => ({
-            ...oldValues,
-            usernameError: data.errors.username,
-          }));
-        }
-      }
-
-      if (data.message) {
-        setError((oldValues) => ({
-          ...oldValues,
-          notFoundORInUse: data.message,
-        }));
-      }
-
-      if (data.username === form.username) {
-        setUser(data.username);
-
-        if (form.check) {
-          // Handle setting the cookie if needed
-        }
-
-        navigate("/home");
+      handleRegister(form);
+      if (registerErrors) {
+        console.log("i'm from register", RegisterErrors);
+        return;
       }
     } catch (error) {
-      console.error("Error:", error);
+      console.log(error);
     }
   };
 
@@ -139,7 +84,9 @@ export default function LargestContentfulPaint() {
               className="input_field"
               onChange={handleChange}
             />
-            <p>{errors.usernameError}</p>
+            {registerErrors.errors && registerErrors.errors.username && (
+              <p>{registerErrors.errors.username}</p>
+            )}{" "}
             <br />
             <label htmlFor="password">Password</label>
             <input
@@ -150,7 +97,9 @@ export default function LargestContentfulPaint() {
               className="input_field"
               onChange={handleChange}
             />
-            <p>{errors.passwordError}</p>
+            {registerErrors.errors && registerErrors.errors.password && (
+              <p>{registerErrors.errors.password}</p>
+            )}
             <br />
             <input
               type="checkbox"
@@ -168,12 +117,16 @@ export default function LargestContentfulPaint() {
               <button className="button" onClick={handleLogin}>
                 Sign in
               </button>
-              <button className="button" onClick={handleRegister}>
+              <button className="button" onClick={handleSignUp}>
                 Sign up
               </button>
             </div>
             <div className="userNotFound flex justify-center">
-              {errors.notFoundORInUse}
+              {registerErrors.message(
+                <p className="text-sm font-semibold text-red-600">
+                  {registerErrors.message}
+                </p>
+              )}
             </div>
           </form>
         </div>
