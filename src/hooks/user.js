@@ -50,26 +50,21 @@ export function useRegister() {
       setLoading(true);
       setError(null);
 
-      const response = await registerUser(data);
+      // Perform the registration
+      await registerUser(data);
 
+      // If no error was thrown, set success to true
       setSuccess(true);
-      console.log("Login successful:", response);
+      console.log("Registration successful: eeeeeeee");
       navigateTo("/home");
     } catch (err) {
-      setError(err || "Unexpected error occurred");
+      setSuccess(false);
+
+      setError(err);
     } finally {
       setLoading(false);
     }
   };
-
-  useEffect(() => {
-    if (success) {
-      console.log("Register was successful");
-    }
-    if (error) {
-      console.log("Error occurred during register:", error);
-    }
-  }, [success, error]);
 
   return { loading, error, success, handleUseRegister };
 }
