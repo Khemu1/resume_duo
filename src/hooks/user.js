@@ -15,6 +15,7 @@ export function useLogin(){
             await Login(data)
             setSuccess(true)
         } catch (error) {
+            setSuccess(false)
             console.log(error)
             setError(error)
         }finally{
