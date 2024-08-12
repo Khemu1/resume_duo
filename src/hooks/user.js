@@ -9,20 +9,18 @@ export function useLogin() {
 
   const navigateTo = useNavigate();
 
-  const handleUseLogin = async (data) => {
-    try {
-      setLoading(true);
-      setError(null);
-
-      const response = await login(data);
-
-      setSuccess(true);
-      console.log("Login successful:", response);
-      navigateTo("/home");
-    } catch (err) {
-      setError(err.message || "Unexpected error occurred");
-    } finally {
-      setLoading(false);
+    const handleUseLoging = async(data) =>{
+        try {
+            setLoadong(true)
+            await Login(data)
+            setSuccess(true)
+        } catch (error) {
+            setSuccess(false)
+            console.log(error)
+            setError(error)
+        }finally{
+            setLoadong(false)
+        }
     }
   };
 
