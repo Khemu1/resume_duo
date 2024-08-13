@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { registerUser, login } from "../utils/user/api";
+import { registerUser, Login } from "../utils/user/api";
 
 export function useLogin() {
   const [loading, setLoading] = useState(false);
@@ -14,7 +14,7 @@ export function useLogin() {
       setLoading(true);
       setError(null);
 
-      const response = await login(data);
+      const response = await Login(data);
 
       setSuccess(true);
       console.log("Login successful:", response);

@@ -46,9 +46,16 @@ label{
 }
 .button{
     width: 35%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
-.butons{
+.buttons{
     margin-left: -9%;
+    display: flex;
+    flex-direction: row;
+    gap: 1.5rem;
+    justify-content: center;
 }
 P{
     color: red;

@@ -35,14 +35,14 @@ export async function login(formData) {
   }
 }
 
-export const registerUser = async (data) => {
+export const registerUser = async (registerData) => {
   try {
     const response = await fetch("/api/user/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify(registerData),
     });
 
     if (!response.ok) {
