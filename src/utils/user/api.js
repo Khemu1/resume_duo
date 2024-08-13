@@ -27,14 +27,14 @@ export async function Login(formData) {
   }
 }
 
-export const registerUser = async (data) => {
+export const registerUser = async (registerData) => {
   try {
     const response = await fetch("/api/user/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify(registerData),
     });
     if (!response.ok) {
       const errorData = await response.json();
@@ -44,9 +44,12 @@ export const registerUser = async (data) => {
       if (errorData.message) {
         throw new Error(errorData.message);
       }
-      const data = await response.json();
-      return data;
+    }else{
+    console.log("continued")
+    const data = await response.json();
+    return data;
     }
+
   } catch (error) {
     console.error("Error:", error);
     throw error || "An error occurred";

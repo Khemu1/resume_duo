@@ -10,7 +10,7 @@ export default function Login() {
   const {
     loading: registerLoading,
     error: registerErrors,
-    handleRegister,
+    handleUseRegister,
   } = useRegister();
 
   const [form, setData] = useState({
@@ -56,7 +56,7 @@ export default function Login() {
 
   const handleSignUp = async (event) => {
     try {
-      handleRegister(form);
+      handleUseRegister(form);
       if (registerErrors) {
         console.log("i'm from register", RegisterErrors);
         return;
@@ -123,9 +123,9 @@ export default function Login() {
               </button>
             </div>
             <div className="userNotFound flex justify-center">
-              { registerErrors && registerErrors.message(
+              { loginErrors && (
                 <p className="text-sm font-semibold text-red-600">
-                  {registerErrors.message}
+                  {loginErrors}
                 </p>
               )}
             </div>
