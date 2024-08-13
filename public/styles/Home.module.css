@@ -6,7 +6,7 @@
     height: 100%;
     width: 100%;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     /* background-image: url("/public/assets/login_background.jpg");
     background-position: center;
     background-position-y: top;
@@ -17,4 +17,39 @@
     width: 100%;
     height: 13%;
     background-color: blue;
+}
+.body{
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    margin-left: 5%;
+    margin-top: 5%;
+    gap: 5rem;
+    height: fit-content;
+    padding-bottom: 3rem;
+}
+.section{
+    display: flex;
+    flex-direction: column;
+}
+.section span{
+    font-size: 4rem;
+    padding-bottom: 1rem;
+    font-weight: bold;
+}
+.skillsWrap{
+    display: flex;
+    flex-direction: column;
+    font-size: 4rem;
+    padding-bottom: 1rem;
+    font-weight: bold;
+    gap: 2rem;
+}
+.skills{
+    display: grid;
+    grid-template: 3rem 3rem / 15% 15% 15%;
+}
+.HTMLshill{
+    font-size: 1rem;
+
 }
