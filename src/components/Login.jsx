@@ -73,12 +73,9 @@ export default function Login() {
               className="input_field"
               onChange={handleChange}
             />
-            {/* {loginErrors && loginErrors.username && (
-              <p className="error-text">{loginErrors.username}</p>
-            )}
             {registerErrors && registerErrors.username && (
               <p className="error-text">{registerErrors.username}</p>
-            )} */}
+            )}
             <br />
             <label htmlFor="password">Password</label>
             <input
@@ -89,12 +86,9 @@ export default function Login() {
               className="input_field"
               onChange={handleChange}
             />
-            {/* {loginErrors && loginErrors.password && (
-              <p className="error-text">{loginErrors.password}</p>
-            )} */}
-            {/* {registerErrors && registerErrors.errors.password && (
-              <p className="error-text">{registerErrors.errors.password}</p>
-            )} */}
+            {registerErrors && registerErrors.password && (
+              <p className="error-text">{registerErrors.password}</p>
+            )}
             <br />
             <input
               type="checkbox"

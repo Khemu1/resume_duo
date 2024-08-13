@@ -50,17 +50,20 @@ export function useRegister() {
       setLoading(true);
       setError(null);
 
-      // Perform the registration
       await registerUser(data);
 
-      // If no error was thrown, set success to true
       setSuccess(true);
-      console.log("Registration successful: eeeeeeee");
       navigateTo("/home");
     } catch (err) {
       setSuccess(false);
 
-      setError(err);
+      if (err.username || err.password) {
+        setError({username: err.username, password: err.password});
+      } else if (err.message) {
+        setError({ message: err.message });
+      } else {
+        setError({ message: "An unexpected error occurred" });
+      }
     } finally {
       setLoading(false);
     }

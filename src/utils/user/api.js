@@ -46,14 +46,15 @@ export const registerUser = async (data) => {
     });
 
     if (!response.ok) {
-      let errorMessage = "Unexpected Error Occurred";
+      let errorMessage = { message: "Unexpected Error Occurred" };
       try {
         const errorData = await response.json();
-        errorMessage = errorData.errors || errorData.message || errorMessage;
+        errorMessage =
+          errorData.errors || { message: errorData.message } || errorMessage;
       } catch (jsonError) {
         console.error("Error parsing JSON:", jsonError);
       }
-      throw new Error(errorMessage);
+      throw errorMessage;
     }
 
     const responseData = await response.json();
@@ -63,3 +64,4 @@ export const registerUser = async (data) => {
     throw error;
   }
 };
+
