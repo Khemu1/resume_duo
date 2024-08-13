@@ -27,7 +27,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className={HomeCSS.section}><span>Extra :</span>originally what I was asked to do was a resume builder with HTML, CSS and javaScript <br />
+        <div className={HomeCSS.section}><span>edit Extra :</span>originally what I was asked to do was a resume builder with HTML, CSS and javaScript <br />
         but I said why don't I take it as far as I can and learn new skills in the way <br /> 
         ( knowing that I had another three projects to do within one month ) <br />
         </div>
