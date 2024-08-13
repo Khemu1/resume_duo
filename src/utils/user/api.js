@@ -35,25 +35,26 @@ export async function login(formData) {
   }
 }
 
-export const registerUser = async (registerData) => {
+export const registerUser = async (data) => {
   try {
     const response = await fetch("/api/user/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(registerData),
+      body: JSON.stringify(data),
     });
 
     if (!response.ok) {
-      let errorMessage = "Unexpected Error Occurred";
+      let errorMessage = { message: "Unexpected Error Occurred" };
       try {
         const errorData = await response.json();
-        errorMessage = errorData.errors || errorData.message || errorMessage;
+        errorMessage =
+          errorData.errors || { message: errorData.message } || errorMessage;
       } catch (jsonError) {
         console.error("Error parsing JSON:", jsonError);
       }
-      throw new Error(errorMessage);
+      throw errorMessage;
     }
 
     const responseData = await response.json();
