@@ -49,11 +49,7 @@ export default function Login() {
   const handleSignUp = async (event) => {
     event.preventDefault();
     try {
-      handleUseRegister(form);
-      if (registerErrors) {
-        console.log("i'm from register", RegisterErrors);
-        return;
-      }
+      await handleUseRegister(form);
     } catch (error) {
       console.error("Register catch error:", error);
     }
@@ -77,10 +73,9 @@ export default function Login() {
               className="input_field"
               onChange={handleChange}
             />
-            <br />
-            {registerErrors && registerErrors.errors && registerErrors.errors.username && (
-              <p>{registerErrors.errors.username}</p>
-            )}{" "}
+            {registerErrors && registerErrors.username && (
+              <p className="error-text">{registerErrors.username}</p>
+            )}
             <br />
             <label htmlFor="password">Password</label>
             <input
@@ -91,10 +86,10 @@ export default function Login() {
               className="input_field"
               onChange={handleChange}
             />
-            { registerErrors && registerErrors.errors && registerErrors.errors.password && (
-              <p>{registerErrors.errors.password}</p>
+            {registerErrors && registerErrors.password && (
+              <p className="error-text">{registerErrors.password}</p>
             )}
-            <br /><br />
+            <br />
             <input
               type="checkbox"
               id="check"
@@ -106,18 +101,26 @@ export default function Login() {
               Remember me
             </label>
             <br />
-            <div className={LoginCSS.buttons}>
-              <button className={LoginCSS.button} onClick={handleLogin}>
+            <div className="buttons flex flex-row gap-7 justify-center">
+              <button
+                className="button"
+                onClick={handleLogin}
+                disabled={loginLoading}
+              >
                 Sign in
               </button>
-              <button className={LoginCSS.button} onClick={handleSignUp}>
+              <button
+                className="button"
+                onClick={handleSignUp}
+                disabled={registerLoading}
+              >
                 Sign up
               </button>
             </div>
             <div className="userNotFound flex justify-center">
-              { loginErrors && (
-                <p className="text-sm font-semibold text-red-600">
-                  {loginErrors}
+              {(loginErrors || registerErrors) && (
+                <p className="text-sm font-extrabold text-red-600">
+                  {loginErrors?.message || registerErrors?.message}
                 </p>
               )}
             </div>
