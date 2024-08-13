@@ -36,11 +36,6 @@ export default function Login() {
     event.preventDefault();
     try {
       await handleUseLogin(form);
-      if (loginErrors) {
-        console.error("Login error:", loginErrors);
-      } else {
-        console.log("Login successful");
-      }
     } catch (error) {
       console.error("Login catch error:", error);
     }
@@ -73,6 +68,9 @@ export default function Login() {
               className="input_field"
               onChange={handleChange}
             />
+            {loginErrors && loginErrors.username && (
+              <p className="error-text">{loginErrors.username}</p>
+            )}
             {registerErrors && registerErrors.username && (
               <p className="error-text">{registerErrors.username}</p>
             )}
@@ -86,6 +84,9 @@ export default function Login() {
               className="input_field"
               onChange={handleChange}
             />
+            {loginErrors && loginErrors.password && (
+              <p className="error-text">{loginErrors.password}</p>
+            )}
             {registerErrors && registerErrors.password && (
               <p className="error-text">{registerErrors.password}</p>
             )}

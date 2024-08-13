@@ -14,13 +14,20 @@ export function useLogin() {
       setLoading(true);
       setError(null);
 
-      const response = await login(data);
+      await login(data);
 
       setSuccess(true);
-      console.log("Login successful:", response);
       navigateTo("/home");
     } catch (err) {
-      setError(err.message || "Unexpected error occurred");
+      setSuccess(false);
+
+      if (err.username || err.password) {
+        setError({ username: err.username, password: err.password });
+      } else if (err.message) {
+        setError({ message: err.message });
+      } else {
+        setError({ message: "An unexpected error occurred" });
+      }
     } finally {
       setLoading(false);
     }
@@ -58,7 +65,7 @@ export function useRegister() {
       setSuccess(false);
 
       if (err.username || err.password) {
-        setError({username: err.username, password: err.password});
+        setError({ username: err.username, password: err.password });
       } else if (err.message) {
         setError({ message: err.message });
       } else {
