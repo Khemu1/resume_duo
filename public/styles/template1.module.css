@@ -54,17 +54,17 @@ img{
 }
 .left_input_field{
     background-color: transparent;
-    color: black;
+    color: white;
     width: 73%;
 }
 .left_input_field_education{
     background-color: transparent;
-    color: black;
+    color: white;
     width: 90%;
     font-size: 2rem;
 }
 .left_input_field_education::placeholder{
-    color: black;
+    color: white;
     font-size: 2rem;
 }
 .info{

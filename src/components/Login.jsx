@@ -4,6 +4,11 @@ import { useLogin, useRegister } from "/src/hooks/user.js";
 
 export default function Login() {
 
+  const [errors,setErrors] = useState({
+    usernameError : '',
+    passwordError : ''
+  })
+
   const {
     loading: loginLoading,
     error: loginErrors,
@@ -20,7 +25,8 @@ export default function Login() {
     password: "",
     check: false,
   });
-  console.log(registerErrors);
+  // console.log(registerErrors);
+  // console.log(loginErrors);
 
   const handleChange = (event) => {
     const { name, type, value, checked } = event.target;
@@ -32,19 +38,86 @@ export default function Login() {
 
   const handleLogin = async (event) => {
     event.preventDefault();
+
+    setErrors(oldvalues =>{
+      return{
+        ...oldvalues,
+        usernameError : '',
+        passwordError : ''
+      }
+    })
+
+
     try {
       await handleUseLogin(form);
+      console.log(registerErrors);
+  console.log(loginErrors);
+      if( loginErrors.username){
+        console.log(loginErrors)
+        console.log(loginErrors.username)
+        console.log("hi")
+        setErrors(oldvalues => {
+          return{
+            ...oldvalues,
+            usernameError : loginErrors.username
+          }
+        })
+      }if(loginErrors.password){
+        console.log(loginErrors)
+        console.log(loginErrors.username)
+        console.log("hi")
+        setErrors(oldvalues => {
+          return{
+            ...oldvalues,
+            passwordError : loginErrors.password
+          }
+        })
+      }
     } catch (error) {
-      console.error("Login catch error:", error);
+      console.error("Login catch error:", error);  
+      console.log(error)
     }
   };
 
   const handleSignUp = async (event) => {
     event.preventDefault();
+
+    setErrors(oldvalues =>{
+      return{
+        ...oldvalues,
+        usernameError : '',
+        passwordError : ''
+      }
+    })
+
     try {
       await handleUseRegister(form);
+      console.log(registerErrors);
+  console.log(loginErrors);
+      if( registerErrors.username){
+        console.log(registerErrors)
+        console.log(registerErrors.username)
+        console.log("hi")
+        setErrors(oldvalues => {
+          return{
+            ...oldvalues,
+            usernameError : registerErrors.username
+          }
+        })
+      }if(registerErrors.password){
+        console.log(registerErrors)
+        console.log(registerErrors.username)
+        console.log("hi")
+        setErrors(oldvalues => {
+          return{
+            ...oldvalues,
+            passwordError : registerErrors.password
+          }
+        })
+      }
     } catch (error) {
       console.error("Register catch error:", error);
+      console.log(errors.passwordError)
     }
   };
 
@@ -66,12 +139,12 @@ export default function Login() {
               className="input_field"
               onChange={handleChange}
             />
-            {loginErrors && loginErrors.username && (
-              <p className="error-text">{loginErrors.username}</p>
+            { errors.usernameError && (
+              <p className="error-text">{errors.usernameError}</p>
             )}
-            {registerErrors && registerErrors.username && (
+            {/* {registerErrors && registerErrors.username && (
               <p className="error-text">{registerErrors.username}</p>
-            )}
+            )} */}
             <br />
             <label htmlFor="password">Password</label>
             <input
@@ -82,13 +155,16 @@ export default function Login() {
               className="input_field"
               onChange={handleChange}
             />
-            {loginErrors && loginErrors.password && (
-              <p className="error-text">{loginErrors.password}</p>
+            {errors.passwordError && (
+              <p className="error-text">{errors.passwordError}</p>
             )}
-            {registerErrors && registerErrors.password && (
+            {/* {registerErrors && registerErrors.password && (
               <p className="error-text">{registerErrors.password}</p>
-            )}
+            )} */}
             <br />
+
+<div className={LoginCSS.checkboxAndLabel}>
+
             <input
               type="checkbox"
               id="check"
@@ -99,6 +175,9 @@ export default function Login() {
             <label htmlFor="check" className="check_label">
               Remember me
             </label>
+
+            </div>
+
             <br />
             <div className="buttons flex flex-row gap-7 justify-center">
               <button
