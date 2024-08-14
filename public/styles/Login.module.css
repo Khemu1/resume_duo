@@ -30,7 +30,7 @@
     flex-direction: column;
     gap: 2.5rem;
 }
-form{
+.form{
     width: 70%;
     margin-left: 19%;
     text-align: -webkit-left;

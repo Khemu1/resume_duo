@@ -1,10 +1,8 @@
-import { useState, useContext } from "react";
-import { UserContext } from "./user_context/UserContext";
+import { useState } from "react";
 import LoginCSS from "/public/styles/Login.module.css";
 import { useLogin, useRegister } from "/src/hooks/user.js";
 
 export default function Login() {
-  const { user, setUser } = useContext(UserContext);
 
   const {
     loading: loginLoading,
@@ -58,7 +56,7 @@ export default function Login() {
             <h1>Resume builder</h1>
           </div>
 
-          <form onSubmit={(e) => e.preventDefault()}>
+          <form className={LoginCSS.form} onSubmit={(e) => e.preventDefault()}>
             <label htmlFor="username">User name</label>
             <input
               type="text"
