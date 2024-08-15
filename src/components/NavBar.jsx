@@ -2,6 +2,7 @@ import NavBarCSS from '/public/styles/navBar.module.css'
 import logo from '/public/assets/logo.jpeg'
 import { UserContext } from './user_context/UserContext';
 import { useContext } from 'react';
+import { Link } from 'react-router-dom';
 
 export default function NavBar() {
 
@@ -22,10 +23,10 @@ export default function NavBar() {
 
                 <div className={NavBarCSS.rightContents}>
                     <div className={NavBarCSS.homeButton}>
-                        <button>HOME</button>
+                    <Link to='/HOME'> <button>HOME</button> </Link>
                     </div>
                     <div className={NavBarCSS.homeButton}>
-                        <button>NEW</button>
+                        <Link to='/NEW'> <button>NEW</button> </Link>
                     </div>
                     <div className={NavBarCSS.homeButton}>
                         <button>SHOW</button>
