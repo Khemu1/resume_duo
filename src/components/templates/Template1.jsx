@@ -2,8 +2,25 @@ import Template1CSS from '/public/styles/template1.module.css'
 import phoneIcon from '/public/assets/phone.png'
 import emailIcon from '/public/assets/341245.png'
 import locationIcon from '/public/assets/kindpng_6175540.png'
+import { useState } from 'react'
+import { useForm } from "react-hook-form"
 
 export default function New() {
+
+    const [tempData, setTempData] = useState({
+        number : '',
+        email : '',
+        location : '',
+        university_name : '',
+        degree : '',
+        skills : {skill_1 : '', skill_2 : '', skill_3 : '', skill_4 : '', skill_5 : ''},
+        languages : {language_1 : '', language_2 : '', language_3 : '', language_4 : '', language_5 : ''},
+        name : '',
+        job_title : '',
+        profile : '',
+        experience : {company : '', position : '', details : '',},
+        refrenceData : {refrence : '', position : '', number : '', email : ''}
+    })
 
 
     return(
@@ -41,7 +58,7 @@ export default function New() {
 
                                     <div className={Template1CSS.education}>
                                         <div className={Template1CSS.phone}>
-                                            <input type='text' name='university_name_1' className={Template1CSS.left_input_field_education} placeholder='university name' ></input>
+                                            <input type='text' name='university_name' className={Template1CSS.left_input_field_education} placeholder='university name' ></input>
                                         </div>
 
                                         <div className={Template1CSS.phone}>
@@ -120,7 +137,7 @@ export default function New() {
                                     <input type='text' name='position' className={Template1CSS.position_input_field} placeholder='your position' ></input>
 
 
-                                        <textarea name='profile' placeholder='details about your work experience' className={Template1CSS.profile} rows={7} />
+                                        <textarea name='details' placeholder='details about your work experience' className={Template1CSS.profile} rows={7} />
 
                                     </div>
                                 </div>
@@ -135,11 +152,11 @@ export default function New() {
                                     <input type='text' name='position' className={Template1CSS.position_input_field} placeholder='Wardiere Inc. / CTO' ></input>
 
                                     <div className={Template1CSS.refrence_number}>phone : 
-                                    <input type='text' name='position' className={Template1CSS.refrence_number_input_field} placeholder='123-456-7890' ></input>
+                                    <input type='text' name='number' className={Template1CSS.refrence_number_input_field} placeholder='123-456-7890' ></input>
                                     </div>
 
                                     <div className={Template1CSS.refrence_number}>Email : 
-                                    <input type='text' name='position' className={Template1CSS.refrence_number_input_field} placeholder='hello@reallygreatsite.com' ></input>
+                                    <input type='text' name='email' className={Template1CSS.refrence_number_input_field} placeholder='hello@reallygreatsite.com' ></input>
                                     </div>
 
                                     </div>
