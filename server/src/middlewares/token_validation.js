@@ -18,7 +18,6 @@ export const authenticateToken = async (req, res, next) => {
   try {
     const accessToken = req.cookies.jwt;
     const refreshToken = req.cookies.refreshToken;
-
     if (!accessToken) {
       if (refreshToken) {
         try {
@@ -32,13 +31,15 @@ export const authenticateToken = async (req, res, next) => {
               {
                 id: decodedRefreshToken.id,
               },
-              accessTokenSecret,
+              process.env.JWT_ACCESS_SECRET,
               { expiresIn: "1h" }
             );
 
             res.cookie("jwt", newAccessToken, accessTokenOptions);
             req.headers.authorization = `Bearer ${newAccessToken}`;
-            return res.status(200).json("New access token issued");
+            return res
+              .status(200)
+              .json("New access token issued", decodedRefreshToken);
           }
         } catch (refreshError) {
           console.error("Refresh token error:", refreshError);
@@ -54,6 +55,7 @@ export const authenticateToken = async (req, res, next) => {
         accessToken,
         process.env.JWT_ACCESS_SECRET
       );
+
       if (!decodedAccessToken) {
         return res
           .status(403)

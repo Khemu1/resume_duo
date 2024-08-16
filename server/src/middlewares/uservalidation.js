@@ -1,5 +1,6 @@
 import User from "../models/user.js";
 import jwt from "jsonwebtoken";
+ /*global process*/
 
 /**
  *

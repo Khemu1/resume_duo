@@ -74,7 +74,7 @@ export async function register(req, res) {
     newUser.save();
 
     const accessToken = jwt.sign(
-      { id: newUser._id },
+      {  id: newUser._id },
       process.env.JWT_ACCESS_SECRET,
       { expiresIn: "1h" }
     );

@@ -2,6 +2,10 @@ import mongoose from "mongoose";
 
 const resumeSchema = mongoose.Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+  templateId: {
+    type: Number,
+    required: [true, "template id is required"],
+  },
   experience_company: { type: String, required: false },
   experience_details: { type: String, required: false },
   experience_position: { type: String, required: false },
