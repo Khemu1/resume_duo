@@ -1,38 +1,36 @@
 import jwt from "jsonwebtoken";
 import User from "../models/user.js";
 
-const accessTokenSecret =
-  process.env.JWT_ACCESS_SECRET || "your-access-token-secret";
-const refreshTokenSecret =
-  process.env.JWT_REFRESH_TOKEN || "your-refresh-token-secret";
-
 const accessTokenOptions = {
   httpOnly: true,
   secure: false, // Set to true in production
   maxAge: 3600000, // 1 hour
   sameSite: "strict",
 };
-
-export const authenticateToken = async (
-  req,
-  res
-) => {
+/**
+ *
+ * @param {import("express").Request} req
+ * @param {import("express").Response} res
+ * @param {import("express").NextFunction} next
+ * @returns
+ */
+export const authenticateToken = async (req, res, next) => {
   try {
     const accessToken = req.cookies.jwt;
-    const refreshToken = req.cookies.refresh;
+    const refreshToken = req.cookies.refreshToken;
 
     if (!accessToken) {
       if (refreshToken) {
         try {
           const decodedRefreshToken = jwt.verify(
             refreshToken,
-            refreshTokenSecret
+            process.env.JWT_REFRESH_TOKEN
           );
 
           if (decodedRefreshToken) {
             const newAccessToken = jwt.sign(
               {
-                userId: decodedRefreshToken.userId,
+                id: decodedRefreshToken.id,
               },
               accessTokenSecret,
               { expiresIn: "1h" }
@@ -54,7 +52,7 @@ export const authenticateToken = async (
     try {
       const decodedAccessToken = jwt.verify(
         accessToken,
-        accessTokenSecret
+        process.env.JWT_ACCESS_SECRET
       );
       if (!decodedAccessToken) {
         return res
@@ -62,11 +60,10 @@ export const authenticateToken = async (
           .json({ message: "Invalid or expired access token" });
       }
 
-      const user = await User.findById(decodedAccessToken.userId);
+      const user = await User.findById(decodedAccessToken.id);
       if (!user) {
         return res.status(404).json({ message: "User not found" });
       }
-      console.log("got use from cookie");
       req.user = user;
       next();
     } catch (accessError) {
