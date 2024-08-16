@@ -17,6 +17,7 @@ export default function New(props) {
     
 
     async function onSubmit(data) {
+        data['id'] = props.id
         console.log(data);
         try {
             const isValid = await userSchema.validate(data)
