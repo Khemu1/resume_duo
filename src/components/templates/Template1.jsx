@@ -4,6 +4,7 @@ import emailIcon from '/public/assets/341245.png'
 import locationIcon from '/public/assets/kindpng_6175540.png'
 import { useTempData } from "/src/hooks/user.js";
 import { useForm } from "react-hook-form"
+import { userSchema } from '/src/validations/tempValidation.js'
 
 export default function New() {
 
@@ -18,11 +19,15 @@ export default function New() {
 
     async function onSubmit(data) {
         console.log(data);
-        try {
-            await handleUseTempData(data)
-            console.log(useTempDataErrors)
-        } catch (error) {
-            console.error(error)
+        const isValid = await userSchema.isValid(data)
+        console.log(isValid)
+        if(isValid){
+            try {
+                await handleUseTempData(data)
+                console.log(useTempDataErrors)
+            } catch (error) {
+                console.error(error)
+            }
         }
     }
 
@@ -41,17 +46,17 @@ export default function New() {
 
                                     <div className={Template1CSS.phone}>
                                         <img src={phoneIcon} alt='cant find image'></img>
-                                        <input type='text' {...register('number')} className={Template1CSS.left_input_field} placeholder='+123-456-7890' ></input>
+                                        <input type='text' {...register('user_number')} className={Template1CSS.left_input_field} placeholder='+123-456-7890' ></input>
                                     </div>
 
                                     <div className={Template1CSS.phone}>
                                         <img src={emailIcon} alt='cant find image' className={Template1CSS.emailIcon}></img>
-                                        <input type='text' {...register('email')} className={Template1CSS.left_input_field} placeholder='hello@reallygreatsite.com' ></input>
+                                        <input type='email' {...register('user_email')} className={Template1CSS.left_input_field} placeholder='hello@reallygreatsite.com' ></input>
                                     </div>
 
                                     <div className={Template1CSS.phone}>
                                         <img src={locationIcon} alt='cant find image' ></img>
-                                        <input type='text' {...register('location')} className={Template1CSS.left_input_field} placeholder='123 Anywhere St., Any City' ></input>
+                                        <input type='text' {...register('user_location')} className={Template1CSS.left_input_field} placeholder='123 Anywhere St., Any City' ></input>
                                     </div>
 
                                 </div>
@@ -68,7 +73,7 @@ export default function New() {
                                         </div>
 
                                         <div className={Template1CSS.phone}>
-                                            <input type='text' {...register('degree')} className={Template1CSS.left_input_field} placeholder='degree' ></input>
+                                            <input type='text' {...register('user_degree')} className={Template1CSS.left_input_field} placeholder='degree' ></input>
                                         </div>
                                     </div>
 
@@ -118,8 +123,8 @@ export default function New() {
 
 
                                 <div className={Template1CSS.nameAndJob}>
-                                    <input type='text' {...register('name')} className={Template1CSS.name_input_field} placeholder='Enter your name here' ></input>
-                                    <input type='text' {...register('job_title')} className={Template1CSS.jobTitle_input_field} placeholder='Enter your job here' ></input>
+                                    <input type='text' {...register('user_name')} className={Template1CSS.name_input_field} placeholder='Enter your name here' ></input>
+                                    <input type='text' {...register('user_job_title')} className={Template1CSS.jobTitle_input_field} placeholder='Enter your job here' ></input>
                                 </div>
 
 
@@ -127,7 +132,7 @@ export default function New() {
                                     <h1>PROFILE</h1> <br /><hr /><br />
                                     <div className={Template1CSS.info}>
 
-                                        <textarea {...register('profile')} placeholder='enter your profile details here' className={Template1CSS.profile} rows={7} />
+                                        <textarea {...register('profile_details')} placeholder='enter your profile details here' className={Template1CSS.profile} rows={7} />
 
                                     </div>
                                 </div>
@@ -139,11 +144,11 @@ export default function New() {
                                     <h1>WORK EXPERIENCE</h1> <br /><hr /><br />
                                     <div className={Template1CSS.info}>
 
-                                    <input type='text' {...register('company')} className={Template1CSS.company_input_field} placeholder='Company name' ></input>
-                                    <input type='text' {...register('position')} className={Template1CSS.position_input_field} placeholder='your position' ></input>
+                                    <input type='text' {...register('experience_company')} className={Template1CSS.company_input_field} placeholder='Company name' ></input>
+                                    <input type='text' {...register('experience_position')} className={Template1CSS.position_input_field} placeholder='your position' ></input>
 
 
-                                        <textarea {...register('details')} placeholder='details about your work experience' className={Template1CSS.profile} rows={7} />
+                                        <textarea {...register('experience_details')} placeholder='details about your work experience' className={Template1CSS.profile} rows={7} />
 
                                     </div>
                                 </div>
@@ -155,14 +160,14 @@ export default function New() {
                                     <div className={Template1CSS.info}>
 
                                     <input type='text' {...register('refrence')} className={Template1CSS.company_input_field} placeholder='Estelle Darcy' ></input>
-                                    <input type='text' {...register('position')} className={Template1CSS.position_input_field} placeholder='Wardiere Inc. / CTO' ></input>
+                                    <input type='text' {...register('refrence_position')} className={Template1CSS.position_input_field} placeholder='Wardiere Inc. / CTO' ></input>
 
                                     <div className={Template1CSS.refrence_number}>phone : 
-                                    <input type='text' {...register('number')} className={Template1CSS.refrence_number_input_field} placeholder='123-456-7890' ></input>
+                                    <input type='text' {...register('refrence_number')} className={Template1CSS.refrence_number_input_field} placeholder='123-456-7890' ></input>
                                     </div>
 
                                     <div className={Template1CSS.refrence_number}>Email : 
-                                    <input type='text' {...register('email')} className={Template1CSS.refrence_number_input_field} placeholder='hello@reallygreatsite.com' ></input>
+                                    <input type='email' {...register('refrence_email')} className={Template1CSS.refrence_number_input_field} placeholder='hello@reallygreatsite.com' ></input>
                                     </div>
 
                                     </div>
