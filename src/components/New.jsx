@@ -9,7 +9,9 @@ export default function New() {
         <div className={NewCSS.page}>
             <NavBar />
             {/* <form className={NewCSS.NewPageform} onSubmit={(e) => e.preventDefault()}> */}
-            <Template1 />
+            <Template1 
+            id = {1}
+            />
             
                 {/* <div className={NewCSS.buttons}>
                     <div className={NewCSS.submit_div}>

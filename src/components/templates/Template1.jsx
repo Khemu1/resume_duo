@@ -6,8 +6,7 @@ import { useTempData } from "/src/hooks/user.js";
 import { useForm } from "react-hook-form"
 import { userSchema } from '/src/validations/tempValidation.js'
 
-export default function New() {
-
+export default function New(props) {
     const {register, handleSubmit} = useForm();
 
     const {
@@ -19,16 +18,20 @@ export default function New() {
 
     async function onSubmit(data) {
         console.log(data);
-        const isValid = await userSchema.isValid(data)
+        try {
+            const isValid = await userSchema.validate(data)
         console.log(isValid)
-        if(isValid){
-            try {
-                await handleUseTempData(data)
-                console.log(useTempDataErrors)
-            } catch (error) {
-                console.error(error)
-            }
+        } catch (error) {
+            console.error(error)
         }
+        // if(isValid){
+        //     try {
+        //         await handleUseTempData(data)
+        //         console.log(useTempDataErrors)
+        //     } catch (error) {
+        //         console.error(error)
+        //     }
+        // }
     }
 
     return(
