@@ -20,6 +20,8 @@ export default function New(props) {
         console.log(data);
         try {
             const isValid = await userSchema.validate(data)
+            await handleUseTempData(data)
+            console.log(useTempDataErrors)
         console.log(isValid)
         } catch (error) {
             console.error(error)
