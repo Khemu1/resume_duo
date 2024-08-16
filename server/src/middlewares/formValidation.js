@@ -4,6 +4,13 @@ import {
   transformYupErrorsIntoObject,
 } from "../utils/index.js";
 
+/**
+ * 
+ * @param {import("express").Request} req 
+ * @param {import("express").Response} res 
+ * @param {import("express").NextFunction} next
+ * @returns 
+ */
 export async function formValidation(req, res, next) {
   try {
     const { username, password } = req.body;

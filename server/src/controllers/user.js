@@ -32,27 +32,27 @@ export async function login(req, res) {
     }
 
     const accessToken = jwt.sign(
-      { username: user.username, userId: findUser._id },
+      { id: findUser._id },
       process.env.JWT_ACCESS_SECRET,
       { expiresIn: "1h" }
     );
 
     const refreshToken = jwt.sign(
-      { username: user.username, userId: findUser._id },
+      { id: findUser._id },
       process.env.JWT_REFRESH_TOKEN,
       { expiresIn: "7d" }
     );
 
     res.cookie("refreshToken", refreshToken, refreshTokenCookieOptions);
     res.cookie("jwt", accessToken, accessTokenCookieOptions);
-    return res.status(200).json({ username: findUser.username });
+    return res
+      .status(200)
+      .json({ username: findUser.username, id: findUser._id });
   } catch (error) {
     console.error(error);
     res.status(500).json("Unexpected Error");
   }
 }
-
-
 
 export async function register(req, res) {
   try {
@@ -74,7 +74,7 @@ export async function register(req, res) {
     newUser.save();
 
     const accessToken = jwt.sign(
-      { username: newUser.username, userId: newUser._id },
+      { id: newUser._id },
       process.env.JWT_ACCESS_SECRET,
       { expiresIn: "1h" }
     );
