@@ -8,14 +8,15 @@ export default function New() {
     return(
         <div className={NewCSS.page}>
             <NavBar />
+            {/* <form className={NewCSS.NewPageform} onSubmit={(e) => e.preventDefault()}> */}
             <Template1 />
-            <form className={NewCSS.NewPageform} onSubmit={(e) => e.preventDefault()}>
-                <div className={NewCSS.buttons}>
+            
+                {/* <div className={NewCSS.buttons}>
                     <div className={NewCSS.submit_div}>
-                        <button name="submit">submit</button>
+                        
                     </div>
                 </div>
-            </form>
+            </form> */}
 
         </div>
     )

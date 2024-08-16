@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { registerUser, login } from "../utils/user/api";
+import { registerUser, login, saveTempData } from "../utils/user/api";
 
 export function useLogin() {
   const [loading, setLoading] = useState(false);
@@ -77,4 +77,27 @@ export function useRegister() {
   };
 
   return { loading, error, success, handleUseRegister };
+}
+
+
+export function useTempData(){
+  const [loading ,setLoading] = useState(false)
+  const [error, setError] = useState(null)
+  const [success, setSuccess] = useState(false)
+
+  const handleUseTempData = async (tempData) => {
+    try {
+      setLoading(true)
+      setError(null)
+      await saveTempData(tempData)
+      setSuccess(true)
+    } catch (error) {
+      setSuccess(false)
+      setError({error : error})
+      console.log(error)
+    }finally{
+      setLoading(false)
+    }
+  }
+return { loading, error, success, handleUseTempData}
 }
