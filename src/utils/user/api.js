@@ -88,3 +88,6 @@ export async function saveTempData(tempData){
     throw error
   }
 }
+//  the data is sent like this -->  data:{ experience_company, experience_details, experience_position, language_1, language_2, language_3
+// language_4, language_5, profile_details, refrence, refrence_email, refrence_number, refrence_position, skill_1, skill_2, skill_3, skill_4
+// skill_5, university_name, user_degree, user_email, user_job_title, user_location, user_name, user_number }
