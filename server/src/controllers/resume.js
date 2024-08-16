@@ -28,7 +28,8 @@ export async function getAllResumes(req, res) {
     res.status(500).json("Unexpected Error");
   }
 }
-export async function addResume(req, res) {
+
+export async function editResume(req, res) { 
   try {
     const user = req.user;
     if (!user) {
