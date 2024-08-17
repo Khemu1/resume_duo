@@ -122,87 +122,89 @@ export default function Login() {
   };
 
   return (
-    <div className={LoginCSS.page}>
-      <div className="main">
-        <div className="main_content h-full w-full flex flex-col gap-10">
-          <div className="h1_div">
-            <h1>Resume builder</h1>
-          </div>
-
-          <form className={LoginCSS.form} onSubmit={(e) => e.preventDefault()}>
-            <label htmlFor="username">User name</label>
-            <input
-              type="text"
-              id="username"
-              name="username"
-              value={form.username}
-              className="input_field"
-              onChange={handleChange}
-            />
-            { errors.usernameError && (
-              <p className="error-text">{errors.usernameError}</p>
-            )}
-            {/* {registerErrors && registerErrors.username && (
-              <p className="error-text">{registerErrors.username}</p>
-            )} */}
-            <br />
-            <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              value={form.password}
-              className="input_field"
-              onChange={handleChange}
-            />
-            {errors.passwordError && (
-              <p className="error-text">{errors.passwordError}</p>
-            )}
-            {/* {registerErrors && registerErrors.password && (
-              <p className="error-text">{registerErrors.password}</p>
-            )} */}
-            <br />
-
-<div className={LoginCSS.checkboxAndLabel}>
-
-            <input
-              type="checkbox"
-              id="check"
-              name="check"
-              checked={form.check}
-              onChange={handleChange}
-            />
-            <label htmlFor="check" className="check_label">
-              Remember me
-            </label>
-
+    <div id={LoginCSS.root}>
+      <div className={LoginCSS.page}>
+        <div className={LoginCSS.main}>
+          <div className={LoginCSS.main_content}>
+            <div className={LoginCSS.h1_div}>
+              <h1>Resume builder</h1>
             </div>
 
-            <br />
-            <div className="buttons flex flex-row gap-7 justify-center">
-              <button
-                className="button"
-                onClick={handleLogin}
-                disabled={loginLoading}
-              >
-                Sign in
-              </button>
-              <button
-                className="button"
-                onClick={handleSignUp}
-                disabled={registerLoading}
-              >
-                Sign up
-              </button>
-            </div>
-            <div className="userNotFound flex justify-center">
-              {(loginErrors || registerErrors) && (
-                <p className="text-sm font-extrabold text-red-600">
-                  {loginErrors?.message || registerErrors?.message}
-                </p>
+            <form className={LoginCSS.form} onSubmit={(e) => e.preventDefault()}>
+              <label htmlFor="username">User name</label>
+              <input
+                type="text"
+                id="username"
+                name="username"
+                value={form.username}
+                className={LoginCSS.input_field}
+                onChange={handleChange}
+              />
+              { errors.usernameError && (
+                <p className="error-text">{errors.usernameError}</p>
               )}
-            </div>
-          </form>
+              {/* {registerErrors && registerErrors.username && (
+                <p className="error-text">{registerErrors.username}</p>
+              )} */}
+              <br />
+              <label htmlFor="password">Password</label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                value={form.password}
+                className={LoginCSS.input_field}
+                onChange={handleChange}
+              />
+              {errors.passwordError && (
+                <p className="error-text">{errors.passwordError}</p>
+              )}
+              {/* {registerErrors && registerErrors.password && (
+                <p className="error-text">{registerErrors.password}</p>
+              )} */}
+              <br />
+
+  <div className={LoginCSS.checkboxAndLabel}>
+
+              <input
+                type="checkbox"
+                id="check"
+                name="check"
+                checked={form.check}
+                onChange={handleChange}
+              />
+              <label htmlFor="check" className="check_label">
+                Remember me
+              </label>
+
+              </div>
+
+              <br />
+              <div className={LoginCSS.buttons}>
+                <button
+                  className={LoginCSS.button}
+                  onClick={handleLogin}
+                  disabled={loginLoading}
+                >
+                  Sign in
+                </button>
+                <button
+                  className={LoginCSS.button}
+                  onClick={handleSignUp}
+                  disabled={registerLoading}
+                >
+                  Sign up
+                </button>
+              </div>
+              <div className={LoginCSS.userNotFound}>
+                {(loginErrors || registerErrors) && (
+                  <p>
+                    {loginErrors?.message || registerErrors?.message}
+                  </p>
+                )}
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>

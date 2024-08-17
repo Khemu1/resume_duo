@@ -2,6 +2,7 @@ import "./App.css";
 import Login from "/src/components/Login.jsx";
 import Home from "/src/components/Home";
 import New from "./components/New.jsx";
+import SHOW from "./components/SHOW.jsx";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 // import React, { useState } from "react";
 import { UserProvider } from "./components/user_context/UserContext.jsx";
@@ -23,6 +24,7 @@ function App() {
           <Route path="/" element={<Login />} />
           <Route path="/Home" element={<Home />} />
           <Route path="/NEW" element={<New />} />
+          <Route path="/SHOW" element={<SHOW />} />
         </Routes>
       </UserProvider>
     </Router>

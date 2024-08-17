@@ -65,7 +65,7 @@ export async function saveTempData(tempData) {
       headers: {
         "content-type": "application/json",
       },
-      body: JSON.stringify(tempData),
+      body: JSON.stringify({data: tempData}),
     });
 
     if (!response.ok) {

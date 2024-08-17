@@ -29,7 +29,7 @@ export default function NavBar() {
                         <Link to='/NEW'> <button>NEW</button> </Link>
                     </div>
                     <div className={NavBarCSS.homeButton}>
-                        <button>SHOW</button>
+                        <Link to='/SHOW'> <button>SHOW</button> </Link>
                     </div>
                 </div>
 
