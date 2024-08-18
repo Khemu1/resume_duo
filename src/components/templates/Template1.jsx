@@ -6,7 +6,7 @@ import { useTempData } from "/src/hooks/user.js";
 import { useForm } from "react-hook-form"
 import { userSchema } from '/src/validations/tempValidation.js'
 
-export default function New(props) {
+export default function Template1(props) {
     const {register, handleSubmit} = useForm();
 
     const {
@@ -129,7 +129,7 @@ export default function New(props) {
 
 
                                 <div className={Template1CSS.nameAndJob}>
-                                    <input type='text' {...register('user_name')} className={Template1CSS.name_input_field} placeholder='Enter your name here' ></input>
+                                    <input type='text' {...register('user_name')} className={Template1CSS.name_input_field} value={props.useername} placeholder='Enter your name here' ></input>
                                     <input type='text' {...register('user_job_title')} className={Template1CSS.jobTitle_input_field} placeholder='Enter your job here' ></input>
                                 </div>
 

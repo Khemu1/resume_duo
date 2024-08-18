@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { registerUser, login, saveTempData } from "../utils/user/api";
+import { registerUser, login, saveTempData, getAllTemplates, getTemplate } from "../utils/user/api";
 
 export function useLogin() {
   const [loading, setLoading] = useState(false);
@@ -100,4 +100,52 @@ export function useTempData(){
     }
   }
 return { loading, error, success, handleUseTempData}
+}
+
+export function useGetAllTemplates(){
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(null)
+  const [success, setSuccess] = useState(false)
+  
+  const handleUseGetAllTemplates = async () => {
+    let resultData
+    try {
+      setLoading(true)
+      setError(null)
+      resultData = await getAllTemplates()
+      setSuccess(true)
+    } catch (error) {
+      setSuccess(false)
+      setError({error : error})
+      console.log(error)
+    }finally{
+      setLoading(false)
+    }
+    return {resultData}
+  }
+  return { loading, error, success, handleUseGetAllTemplates }
+}
+
+export function useGetTemplate(){
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(null)
+  const [success, setSuccess] = useState(false)
+
+  const handleUseGetTemplate = async (id) => {
+    let resultData
+    try {
+      setLoading(true)
+      setError(null)
+      resultData = await getTemplate(id)
+      setSuccess(true)
+    } catch (error) {
+      setSuccess(false)
+      setError({error : error})
+      console.log(error)
+    }finally{
+      setLoading(false)
+    }
+    return {resultData}
+  }
+  return { loading, error, success, handleUseGetTemplate }
 }

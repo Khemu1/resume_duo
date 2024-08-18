@@ -90,3 +90,51 @@ export async function saveTempData(tempData) {
 //  the data is sent like this -->  data:{ experience_company, experience_details, experience_position, language_1, language_2, language_3
 // language_4, language_5, profile_details, refrence, refrence_email, refrence_number, refrence_position, skill_1, skill_2, skill_3, skill_4
 // skill_5, university_name, user_degree, user_email, user_job_title, user_location, user_name, user_number }
+
+export async function getAllTemplates() {
+  try {
+    const response = await fetch('/api/resume/get-resumes', {
+      method : 'GET',
+      "Content-Type": "application/json",
+    })
+    if (!response.ok){
+      let errorMessage = { message : 'Unexpected Error Occurred'}
+      try {
+        const errorData = await response.json();
+        errorMessage =
+          errorData.errors || { message: errorData.message } || errorMessage;
+      } catch (jsonError) {
+        console.error("Error parsing JSON:", jsonError);
+      }
+      throw errorMessage;
+    }
+    const responseData = await response.json()
+    return responseData
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export async function getTemplate(id){
+  try {
+    const response = await fetch(`/api/resume/get-resume/${id}`, {
+      method : 'GET',
+      "Content-Type": "application/json",
+    })
+    if(!response.ok){
+      let errorMessage = {message : 'Unexpected Error Occurred'}
+      try {
+        const errorData = await response.json();
+        errorMessage = errorData.errors || {message : errorData.message} || errorMessage
+      } catch (jsonError) {
+        console.error("Error parsing JSON:", jsonError)
+      }
+      throw errorMessage;
+    }
+    const responseData = await response.json()
+    console.log(response)
+    return responseData
+  } catch (error) {
+    console.log(error)
+  }
+}
