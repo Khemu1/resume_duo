@@ -18,7 +18,6 @@ const UserProvider = ({ children }) => {
           const result = await response.json();
           if (response.ok) {
             setUser(result);
-            console.log("User data set:", result);
             return;
           }
           navigateTo("/");

@@ -6,9 +6,7 @@ import { Link } from 'react-router-dom';
 
 export default function NavBar() {
 
-    // const [username, setUsername] = useContext(Context)
     const { user } = useContext(UserContext);
-
 
     return(
         <div className={NavBarCSS.navBar}>

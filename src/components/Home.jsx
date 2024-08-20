@@ -22,44 +22,14 @@ export default function Home() {
   React.useEffect(function(){
     async function getAllTemplates() {
       const resultData = await handleUseGetAllTemplates()
-      console.log(resultData)
       setAllTemps(resultData)
     }
     getAllTemplates()
   }, [])
 
-if (allTemps  && allTemps.resultData.length > 0){
-  // allTemps.map(item => {
-  //   return(
-  //     console.log('hello')
-  //   )
-  // })
-  console.log(allTemps.resultData[0]._id)
-  // console.log(typeof(allTemps))
-}
-
-
-
-// const cards = allTemps.resultData.map(slide => {
-//   return (
-//     <SwiperSlide key={slide._id} className="swiper-slide">
-//       here is the swiper
-//   </SwiperSlide>
-//   )
-// })        
-
-
-
-
   return (
     <div className={HomeCSS.page}>
       <NavBar />
-
-
-
-
-
-
 
       <div className="swiper-container">
           <Swiper
@@ -81,16 +51,7 @@ if (allTemps  && allTemps.resultData.length > 0){
               </Swiper>
               <div className="swiper-pagination"></div>
       </div>
-
-
-
-
-
-
-
-
-
-
+      
       <div className={HomeCSS.body}>
         <div className={HomeCSS.section}>Create professional resumes in minutes <br /> with our easy-to-use builder</div>
         <div className={HomeCSS.man_with_laptop_div}> <img src={man_with_laptop} alt="cant find image"></img> </div>
@@ -99,26 +60,6 @@ if (allTemps  && allTemps.resultData.length > 0){
         <div className={HomeCSS.succssfull_man_div}> <img src={succssfull_man} alt="cant find image"></img> </div>
         <div className={HomeCSS.section}>Start building your resume now <br /> Explore our templates <br /> Learn more about our features</div>
         <div className={HomeCSS.last_section}>And remember <br /> Our easy-to-use resume builder <br /> helps you land your dream job.</div>
-
-        {/* <div className={HomeCSS.section}><span>About :</span>this is a full stack resume builder web application with a login form which means that <br />
-        you can add, delete and modify resumes with different templates and different users</div>
-
-        <div className={HomeCSS.skillsWrap}>Skills used :
-          <div className={HomeCSS.skills}>
-            <div className={HomeCSS.HTMLshill}>HTML</div>
-            <div className={HomeCSS.HTMLshill}>CSS</div>
-            <div className={HomeCSS.HTMLshill}>JavaScript</div>
-            <div className={HomeCSS.HTMLshill}>React</div>
-            <div className={HomeCSS.HTMLshill}>Vite</div>
-            <div className={HomeCSS.HTMLshill}>tailwind</div>
-          </div>
-        </div> */}
-
-        {/* <div className={HomeCSS.section}><span>edit Extra :</span>originally what I was asked to do was a resume builder with HTML, CSS and javaScript <br />
-        but I said why don't I take it as far as I can and learn new skills in the way <br /> 
-        ( knowing that I had another three projects to do within one month ) <br />
-        </div> */}
-
       </div>
     </div>
   );

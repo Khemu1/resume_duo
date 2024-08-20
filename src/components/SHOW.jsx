@@ -5,8 +5,6 @@ import { useGetTemplate } from "/src/hooks/user.js";
 import Template1 from './templates/Template1.jsx'
 export default function SHOW() {
 
-  console.log(window.location.href.split("id=")[1])
-
     const [TempData, setTempData] = useState();
 
     const {
@@ -15,8 +13,6 @@ export default function SHOW() {
         handleUseGetTemplate,
     } = useGetTemplate();
 
-
-
     React.useEffect(function(){
         async function getAllTemplates() {
           const resultData = await handleUseGetTemplate(window.location.href.split("id=")[1])
@@ -24,18 +20,6 @@ export default function SHOW() {
         }
         getAllTemplates()
       }, [])
-    
-    if (TempData){
-      // allTemps.map(item => {
-      //   return(
-      //     console.log('hello')
-      //   )
-      // })
-      console.log(TempData.resultData)
-      // console.log(typeof(allTemps))
-    }
-
-
 
     return(
         <div className={showcss.page}>
@@ -76,7 +60,6 @@ export default function SHOW() {
             __v = {TempData.resultData.__v}
             resumeId = {TempData.resultData._id}
             />}
-
         </div>
     )
 }

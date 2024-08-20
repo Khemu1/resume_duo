@@ -79,7 +79,7 @@ P{
     display: flex;
     justify-content: center;
     align-items: center;
-    background-image: url("/public/assets/login_background.jpg");
+    background-image: url("/public/assets/pngtree-resume-and-resume-template-on-a-blue-table-image_2974658.jpg");
     background-position: center;
     background-position-y: top;
     background-repeat: no-repeat;
@@ -89,8 +89,8 @@ P{
     height: fit-content;
     width: 38%;
     border-radius: 10px;
-    backdrop-filter: blur(20px);
-    box-shadow: 0px 0px 30px #9af8f3;
+    backdrop-filter: blur(3px);
+    box-shadow: 0px 0px 80px #004a46;
     padding-bottom: 6%;
 }
 .main_content{

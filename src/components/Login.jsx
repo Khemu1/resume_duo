@@ -25,8 +25,6 @@ export default function Login() {
     password: "",
     check: false,
   });
-  // console.log(registerErrors);
-  // console.log(loginErrors);
 
   const handleChange = (event) => {
     const { name, type, value, checked } = event.target;
@@ -50,12 +48,7 @@ export default function Login() {
 
     try {
       await handleUseLogin(form);
-      console.log(registerErrors);
-  console.log(loginErrors);
       if( loginErrors.username){
-        console.log(loginErrors)
-        console.log(loginErrors.username)
-        console.log("hi")
         setErrors(oldvalues => {
           return{
             ...oldvalues,
@@ -63,9 +56,6 @@ export default function Login() {
           }
         })
       }if(loginErrors.password){
-        console.log(loginErrors)
-        console.log(loginErrors.username)
-        console.log("hi")
         setErrors(oldvalues => {
           return{
             ...oldvalues,
@@ -75,7 +65,6 @@ export default function Login() {
       }
     } catch (error) {
       console.error("Login catch error:", error);  
-      console.log(error)
     }
   };
 
@@ -92,12 +81,7 @@ export default function Login() {
 
     try {
       await handleUseRegister(form);
-      console.log(registerErrors);
-  console.log(loginErrors);
       if( registerErrors.username){
-        console.log(registerErrors)
-        console.log(registerErrors.username)
-        console.log("hi")
         setErrors(oldvalues => {
           return{
             ...oldvalues,
@@ -105,9 +89,6 @@ export default function Login() {
           }
         })
       }if(registerErrors.password){
-        console.log(registerErrors)
-        console.log(registerErrors.username)
-        console.log("hi")
         setErrors(oldvalues => {
           return{
             ...oldvalues,
@@ -117,7 +98,6 @@ export default function Login() {
       }
     } catch (error) {
       console.error("Register catch error:", error);
-      console.log(errors.passwordError)
     }
   };
 
@@ -143,9 +123,6 @@ export default function Login() {
               { errors.usernameError && (
                 <p className="error-text">{errors.usernameError}</p>
               )}
-              {/* {registerErrors && registerErrors.username && (
-                <p className="error-text">{registerErrors.username}</p>
-              )} */}
               <br />
               <label htmlFor="password">Password</label>
               <input
@@ -159,13 +136,8 @@ export default function Login() {
               {errors.passwordError && (
                 <p className="error-text">{errors.passwordError}</p>
               )}
-              {/* {registerErrors && registerErrors.password && (
-                <p className="error-text">{registerErrors.password}</p>
-              )} */}
               <br />
-
   <div className={LoginCSS.checkboxAndLabel}>
-
               <input
                 type="checkbox"
                 id="check"

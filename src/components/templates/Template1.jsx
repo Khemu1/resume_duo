@@ -8,7 +8,6 @@ import { userSchema } from '/src/validations/tempValidation.js'
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-
 export default function Template1(props) {
 
     const navigateTo = useNavigate();
@@ -87,7 +86,6 @@ export default function Template1(props) {
         }));
     };
     
-
     const {register, handleSubmit} = useForm();
 
     const {
@@ -95,7 +93,6 @@ export default function Template1(props) {
         error : useTempDataErrors,
         handleUseTempData,
     } = useTempData();
-
 
     const {
         loading : useDeleteResumeLodaing,
@@ -112,12 +109,9 @@ export default function Template1(props) {
 
     async function onSubmit(data) {
         data['templateId'] = props.id
-        console.log(data);
         try {
             const isValid = await userSchema.validate(data)
             await handleUseTempData(data)
-            console.log(useTempDataErrors)
-        console.log(isValid)
         navigateTo('/HOME')
         } catch (error) {
             console.error(error)
@@ -130,37 +124,19 @@ export default function Template1(props) {
         try {
             await handleUseDeleteResume(props.resumeId);
             navigateTo("/home");
-            console.log(useDeleteResumeErrors);
         } catch (error) {
             console.error("Delete catch error:", error);  
-            console.log(error)
         }
     }
-
 
     const handleEditResume = async (event) => {
         event.preventDefault();
-        console.log(form)
-
         try {
             await handleUseEditResume(form);
-            console.log(useEditResumeErrors);
         } catch (error) {
             console.error("Edit catch error:", error);  
-            console.log(error)
         }
     }
-
-
-    // async function handleEditResume(data) {
-    //     console.log(data);
-    //     try {
-    //         await handleUseEditResume(data)
-    //         console.log(useEditResumeErrors)
-    //     } catch (error) {
-    //         console.error(error)
-    //     }
-    // }
 
     return(
             <div className={Template1CSS.template}>
@@ -212,7 +188,6 @@ export default function Template1(props) {
                             </div>
 
 
-
                             <div className={Template1CSS.section}>
                                 <h1>SKILLS</h1> <br /><hr /><br />
                                 <div className={Template1CSS.skills_info}>
@@ -229,8 +204,6 @@ export default function Template1(props) {
                             </div>
 
 
-
-
                             <div className={Template1CSS.section}>
                                 <h1>LANGUAGES</h1> <br /><hr /><br />
                                 <div className={Template1CSS.skills_info}>
@@ -245,7 +218,6 @@ export default function Template1(props) {
 
                                 </div>
                             </div>
-
 
                         </div>
 
@@ -269,8 +241,6 @@ export default function Template1(props) {
                                 </div>
 
 
-
-
                                 <div className={Template1CSS.section}>
                                     <h1>WORK EXPERIENCE</h1> <br /><hr /><br />
                                     <div className={Template1CSS.info}>
@@ -283,7 +253,6 @@ export default function Template1(props) {
 
                                     </div>
                                 </div>
-
 
 
                                 <div className={Template1CSS.last_right_section}>
@@ -303,8 +272,6 @@ export default function Template1(props) {
 
                                     </div>
                                 </div>
-
-
 
                             </div>
                         </div>
