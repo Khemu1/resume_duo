@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { registerUser, login, saveTempData, getAllTemplates, getTemplate } from "../utils/user/api";
+import { registerUser, login, saveTempData, getAllTemplates, getTemplate, deleteResume, editResume } from "../utils/user/api";
 
 export function useLogin() {
   const [loading, setLoading] = useState(false);
@@ -148,4 +148,48 @@ export function useGetTemplate(){
     return {resultData}
   }
   return { loading, error, success, handleUseGetTemplate }
+}
+
+export function useDeleteResume(){
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(null)
+  const [success, setSuccess] = useState(false)
+
+  const handleUseDeleteResume = async (id) => {
+    try {
+      setLoading(true)
+      setError(null)
+      await deleteResume(id)
+      setSuccess(true)
+    } catch (error) {
+      setSuccess(false)
+      setError({error : error})
+      console.log(error)
+    }finally{
+      setLoading(false)
+    }
+  }
+  return { loading, error, success, handleUseDeleteResume };
+}
+
+export function useEditResume(){
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(null)
+  const [success, setSuccess] = useState(false)
+
+  const handleUseEditResume = async (id) => {
+    try {
+      setLoading(true)
+      setError(null)
+      await editResume(id)
+      setSuccess(true)
+    } catch (error) {
+      setSuccess(false)
+      setError({error : error})
+      console.log(error)
+    }finally{
+      setLoading(false)
+    }
+  }
+  return { loading, error, success, handleUseEditResume };
 }

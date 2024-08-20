@@ -132,7 +132,59 @@ export async function getTemplate(id){
       throw errorMessage;
     }
     const responseData = await response.json()
-    console.log(response)
+    console.log(responseData)
+    return responseData
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export async function deleteResume(id){
+  try {
+    console.log(id)
+    const response = await fetch(`/api/resume/delete-resume/${id}`, {
+      method : 'DELETE',
+      "content-type": "application/json",
+    })
+    if(!response.ok){
+      let errorMessage = {message : 'Unexpected Error Occurred'}
+      try {
+        const errorData = await response.json()
+        errorMessage = errorData.errors || {message : errorData.message} || errorMessage
+      } catch (jsonError) {
+        console.error("Error parsing JSON:", jsonError)
+      }
+      throw errorMessage
+    }
+    const responseData = await response.json()
+    console.log(responseData)
+    return responseData
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export async function editResume(form) {
+  try {
+    const response = await fetch(`/api/resume/edit-resume/${form.resumeId}`, {
+      method : 'PATCH',
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(form),
+    })
+    if(!response.ok){
+      let errorMessage = {message : 'Unexpected Error Occurred'}
+      try {
+        const errorData = await response.json()
+        errorMessage = errorData.errors || {message : errorData.message} || errorMessage
+      } catch (jsonError) {
+        console.error("Error parsing JSON:", jsonError)
+      }
+      throw errorMessage
+    }
+    const responseData = await response.json()
+    console.log(responseData)
     return responseData
   } catch (error) {
     console.log(error)
